@@ -1,0 +1,36 @@
+[project]
+name = "auto-offer"
+version = "0.1.0"
+description = "Небольшая утилита для помощи в поске работы на hh.ru"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = []
+
+[tool.mypy]
+python_version = 3.12
+check_untyped_defs = true
+disallow_untyped_defs = true
+ignore_missing_imports = true
+show_error_codes = true
+
+[tool.ruff.lint]
+ignore = ["B008"]
+select = [
+    "A",
+    "C",
+    "W",
+    "E",
+    "F",
+    "UP",
+    "B",
+    "SIM",
+    "I",
+]
+
+
+[dependency-groups]
+dev = [
+    "mypy>=1.15.0",
+    "pre-commit>=4.1.0",
+    "ruff>=0.9.6",
+]
