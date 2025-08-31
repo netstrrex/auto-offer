@@ -4,7 +4,9 @@ version = "0.1.0"
 description = "Небольшая утилита для помощи в поске работы на hh.ru"
 readme = "README.md"
 requires-python = ">=3.13"
-dependencies = []
+dependencies = [
+    "aiohttp>=3.12.15",
+]
 
 [tool.mypy]
 python_version = 3.12
