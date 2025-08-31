@@ -7,6 +7,7 @@ requires-python = ">=3.13"
 dependencies = [
     "aiohttp>=3.12.15",
     "colorlog>=6.9.0",
+    "g4f[api]>=0.6.1.6",
     "pydantic-settings>=2.10.1",
 ]
 
