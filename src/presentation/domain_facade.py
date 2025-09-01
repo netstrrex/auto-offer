@@ -41,7 +41,9 @@ class DomainFacade:
                 )
                 timezone = next_publish_time.tzinfo
                 now_in_timezone = datetime.now(timezone)
-                sleep_seconds = (next_publish_time - now_in_timezone).seconds
+                sleep_seconds = int(
+                    (next_publish_time - now_in_timezone).total_seconds()
+                )
                 hours = sleep_seconds // 3600
                 minutes = (sleep_seconds % 3600) // 60
                 logger.info(
