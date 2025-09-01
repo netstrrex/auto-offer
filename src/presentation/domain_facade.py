@@ -32,16 +32,24 @@ class DomainFacade:
     async def lift_resume_forever(self) -> None:
         while True:
             resume_detail = await self._hh_service.get_resume_detail()
-            if not resume_detail["can_publish_or_update"]:
+            if resume_detail["can_publish_or_update"]:
+                await self._hh_service.lift_resume()
+                logger.info("Резюме успешно поднято в поиске")
+            else:
                 next_publish_time = datetime.strptime(
                     resume_detail["next_publish_at"], "%Y-%m-%dT%H:%M:%S%z"
                 )
                 timezone = next_publish_time.tzinfo
                 now_in_timezone = datetime.now(timezone)
                 sleep_seconds = (next_publish_time - now_in_timezone).seconds
+                hours = sleep_seconds // 3600
+                minutes = (sleep_seconds % 3600) // 60
+                logger.info(
+                    "Поднять резюме в поиске пока нельзя, засыпаем на %dч %dм...",
+                    hours,
+                    minutes,
+                )
                 await asyncio.sleep(sleep_seconds)
-            await self._hh_service.lift_resume()
-            logger.info("Резюме успешно поднято в поиске")
 
     async def apply_to_vacancies_forever(self) -> None:
         resume_detail = await self._hh_service.get_resume_detail()
