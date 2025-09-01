@@ -53,7 +53,7 @@ class HhService:
         return VacancyDetail(result["name"], clear_details)
 
     async def lift_resume(self) -> None:
-        await self._hh_api.post(f"resumes/{self._resume_id}/publish")
+        await self._hh_api.post(f"/resumes/{self._resume_id}/publish")
 
     async def get_vacancies_ids(self) -> set[str]:
         sem = Semaphore(5)
