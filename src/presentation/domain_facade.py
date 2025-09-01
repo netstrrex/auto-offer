@@ -52,6 +52,7 @@ class DomainFacade:
             new_vacancies = self._viewed_vacancies ^ vacancies_ids
             self._viewed_vacancies.update(new_vacancies)
             if self._apply_counter >= 150:
+                logger.info("Достигнут суточный лимит откликов. Засыпаем на стуки...")
                 await asyncio.sleep(60 * 60 * 24)
                 self._apply_counter = 0
             tasks = tuple(
@@ -59,4 +60,5 @@ class DomainFacade:
                 for vacancy_id in new_vacancies
             )
             await asyncio.gather(*tasks)
+            logger.info("Подходящие вакансии закончились. Засыпаем на час...")
             await asyncio.sleep(60 * 60)
