@@ -1,9 +1,16 @@
 import asyncio
 import re
 from asyncio import Semaphore
+from dataclasses import dataclass
 from typing import Any, cast
 
 from core.api import AbstractHhApi
+
+
+@dataclass
+class VacancyDetail:
+    name: str
+    description: str
 
 
 class HhService:
@@ -38,12 +45,12 @@ class HhService:
         )
         return resume_detail
 
-    async def get_vacancy_detail(self, vacancy_id: str) -> str:
+    async def get_vacancy_detail(self, vacancy_id: str) -> VacancyDetail:
         result = cast(
             dict[str, Any], await self._hh_api.get(f"/vacancies/{vacancy_id}")
         )
         clear_details = re.sub(r"(\<(/?[^>]+)>)", "", result["description"])
-        return clear_details
+        return VacancyDetail(result["name"], clear_details)
 
     async def lift_resume(self) -> None:
         await self._hh_api.post(f"resumes/{self._resume_id}/publish")
