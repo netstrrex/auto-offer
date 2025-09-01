@@ -59,13 +59,12 @@ class HhApi(AbstractHhApi):
         data: dict[str, Any] | None = None,
         params: dict[str, Any] | None = None,
     ) -> dict[str, Any] | None:
-        session = await anext(session_generator())
+        session = await anext(self._session_generator)
         await self._ensure_token()
-        logger.info(self.api_url + url)
         async with session.post(
             self.api_url + url, data=data, params=params, headers=self._headers
         ) as response:
-            if response.status == 204:
+            if response.status in (201, 204):
                 return None
             response_json = await response.json()
         return response_json
