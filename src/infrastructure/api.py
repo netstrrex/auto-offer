@@ -50,7 +50,7 @@ class HhApi(AbstractHhApi):
         ) as response:
             if response.status == 204:
                 return None
-            response_json = await response.json()
+            response_json = await response.json(content_type=None)
         return response_json
 
     async def post(
@@ -66,5 +66,5 @@ class HhApi(AbstractHhApi):
         ) as response:
             if response.status in (201, 204):
                 return None
-            response_json = await response.json()
+            response_json = await response.json(content_type=None)
         return response_json
