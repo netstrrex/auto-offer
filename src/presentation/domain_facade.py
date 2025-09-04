@@ -67,7 +67,7 @@ class DomainFacade:
                         hours,
                         minutes,
                     )
-                    await asyncio.sleep(sleep_seconds)
+                    await asyncio.sleep(sleep_seconds + 5)
 
             await process_resume_lift()
 
